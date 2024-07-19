@@ -6,9 +6,9 @@ const db = require('../dbconnection');
 
 
 exports.loginUser = async (req,res) =>{
-    const {username,password} = req.body;
+    const {username,password,role} = req.body;
 
-    const cekUsername = "SELECT * FROM tb_admin WHERE username=?";
+    const cekUsername = "SELECT * FROM tb_user WHERE username=?";
     db.query(cekUsername,[username],(err,result) =>{
       if(err) throw err;
       if(result.length === 0){
@@ -32,27 +32,25 @@ exports.loginUser = async (req,res) =>{
     })
 }
 
-exports.profile = async (req, res) => {
-    return res.status(200).json({
-      user:req.user
-    });
-  }
 
-
-exports.editUser = async (req,res) =>{
+exports.editUser = async (req, res) => {
   try {
-    const {username} = req.body;
-  if(!username){
+    const { id, username, password } = req.body;
+
+    if (!id || !username || !password) {
       return res.status(400).json({
-        msg:"Please fill all the fields"
+        msg: "Please fill all the fields"
       });
-  }
-  const query = "UPDATE tb_admin SET username=? WHERE email=?";
-  db.query(query,[username],(err,result) =>{
-      if(err) throw err;
-      return res.status(201).json({msg:"User updated successfully"});
-  })
+    }
+    const hashedPassword = await bcrypt.hash(password, 8);
+
+    const query = `UPDATE tb_user SET username = ?, password = ? WHERE id = ?`;
+    db.query(query, [username, hashedPassword, id], (err, result) => {
+      if (err) throw err;
+      return res.status(200).json({ msg: "User updated successfully" });
+    });
   } catch (error) {
-    console.log(error.massages);
+    console.log(error.message);
+    return res.status(500).json({ msg: "Server error", error: error.message });
   }
-}
+};

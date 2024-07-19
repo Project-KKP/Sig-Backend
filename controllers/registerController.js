@@ -11,7 +11,7 @@ exports.registerUser = async (req, res) => {
     }
 
     try {
-        const [existingUser] = await db.promise().query("SELECT * FROM tb_admin WHERE username = ?", [username]);
+        const [existingUser] = await db.promise().query("SELECT * FROM tb_user WHERE username = ?", [username]);
         if (existingUser.length > 0) {
             return res.status(400).json({
                 msg: "Username already exists"
@@ -19,7 +19,7 @@ exports.registerUser = async (req, res) => {
         }
 
         const hashedPassword = bcrypt.hashSync(password, saltRounds);
-        await db.promise().query("INSERT INTO tb_admin (username, password) VALUES (?, ?)", [username, hashedPassword]);
+        await db.promise().query("INSERT INTO tb_user (username, password) VALUES (?, ?)", [username, hashedPassword]);
 
         return res.status(201).json({ msg: "User registered successfully" });
     } catch (err) {
