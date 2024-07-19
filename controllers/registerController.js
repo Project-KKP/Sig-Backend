@@ -19,18 +19,9 @@ exports.registerUser = async (req, res) => {
         }
 
         const hashedPassword = bcrypt.hashSync(password, saltRounds);
-        await db.promise().query("INSERT INTO tb_user (username, password) VALUES (?, ?)", [username, hashedPassword]);
+        await db.promise().query("INSERT INTO tb_user (username, password, role) VALUES (?, ?, ?)", [username, hashedPassword, 'user']);
 
         return res.status(201).json({ msg: "User registered successfully" });
-    } catch (err) {
-        return res.status(500).json({ msg: "Server error", error: err.message });
-    }
-};
-
-exports.getUser = async (req, res) => {
-    try {
-        const [users] = await db.promise().query("SELECT * FROM tb_user");
-        return res.status(200).json({ result: users });
     } catch (err) {
         return res.status(500).json({ msg: "Server error", error: err.message });
     }
