@@ -23,8 +23,8 @@ router.put('/edituser', verifyToken, editUser);
 
 
 //create blank
-router.post('/createblank', [verifyToken, isAdmin], createBlank);
-router.delete('/deleteblank/:id', [verifyToken, isAdmin], deleteBlank);
-router.put('/updateblank/:id', [verifyToken, isAdmin], updateBlank);
+router.post('/createblankspot', [verifyToken, isAdmin], createBlank);
+router.delete('/deleteblankspot/:id', [verifyToken, isAdmin], deleteBlank);
+router.put('/updateblankspot/:id', [verifyToken, isAdmin], updateBlank);
 
 module.exports = router;
