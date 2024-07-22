@@ -3,6 +3,7 @@ const { createLocation } = require('../controllers/createController');
 const { deleteLocation } = require('../controllers/deleteController');
 const { updateLocation } = require('../controllers/updateController');
 const { getData } = require('../controllers/dataController');
+const { getReport, reportUser } = require('../controllers/reportController')
 const { loginUser, editUser } = require('../controllers/loginController');
 const { registerUser } = require('../controllers/registerController');
 const { verifyToken, isAdmin } = require('../middleware/auth');
@@ -14,6 +15,7 @@ const { updateBlank } = require('../controllers/updateblank');
 router.get('/data', getData);
 router.post('/login', loginUser);
 router.post('/register', registerUser);
+router.get('/report', [verifyToken, isAdmin], getReport)
 
 // Protected routes for admin
 router.post('/create', [verifyToken, isAdmin], createLocation);

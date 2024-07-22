@@ -6,7 +6,7 @@ const port = 5000
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
-
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api', DataRoutes);
 
 app.use(errorHandler);
