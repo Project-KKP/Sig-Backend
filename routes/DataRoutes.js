@@ -10,6 +10,7 @@ const { verifyToken, isAdmin } = require('../middleware/auth');
 const { createBlank } = require('../controllers/createblank');
 const { deleteBlank } = require('../controllers/deleteblank');
 const { updateBlank } = require('../controllers/updateblank');
+const { getBlank } = require('../controllers/getblank')
 
 // Public routes
 router.get('/data', getData);
@@ -25,8 +26,9 @@ router.put('/edituser', verifyToken, editUser);
 
 
 //create blank
-router.post('/createblank', [verifyToken, isAdmin], createBlank);
-router.delete('/deleteblank/:id', [verifyToken, isAdmin], deleteBlank);
-router.put('/updateblank/:id', [verifyToken, isAdmin], updateBlank);
+router.post('/createblankspot', [verifyToken, isAdmin], createBlank);
+router.delete('/deleteblankspot/:id', [verifyToken, isAdmin], deleteBlank);
+router.put('/updateblankspot/:id', [verifyToken, isAdmin], updateBlank);
+router.get('/getblank', getBlank);
 
 module.exports = router;
