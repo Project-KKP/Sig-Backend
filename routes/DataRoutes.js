@@ -16,13 +16,13 @@ const { getBlank } = require('../controllers/getblank')
 router.get('/towers', getData);
 router.post('/login', loginUser);
 router.post('/register', registerUser);
-router.get('/report', [verifyToken, isAdmin], getReport)
+router.put('/edituser', verifyToken, editUser);
 
 // Protected routes for admin
 router.post('/towers', [verifyToken, isAdmin], createLocation);
 router.put('/towers/:id', [verifyToken, isAdmin], updateLocation);
 router.delete('/towers/:id', [verifyToken, isAdmin], deleteLocation);
-router.put('/edituser', verifyToken, editUser);
+router.get('/report', [verifyToken, isAdmin], getReport)
 
 
 //create blank
