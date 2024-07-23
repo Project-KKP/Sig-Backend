@@ -1,27 +1,42 @@
-const { uploadImage } = require('../middleware/firebasehelper.js');
-const { db } = require('../dbconnection.js');
+const db = require('../dbconnection')
 
-const saveReport = async (req, res) => {
-  const { nama, email, telepon, lokasi, operator, keterangan } = req.body;
-  const file = req.file;
-
-  if (!file) {
-    return res.status(400).json({ error: 'Image file is required' });
-  }
-
-  try {
-    const imageUrl = await uploadImage(file);
-
-    const [result] = await db.execute(
-      'INSERT INTO reports (nama, email, telepon, lokasi, operator, keterangan, imageUrl) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [nama, email, telepon, lokasi, operator, keterangan, imageUrl]
-    );
-
-    res.status(201).json({ id: result.insertId, message: 'Report saved successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to save report' });
-  }
+exports.getReport = (req, res) => {
+    const sql = 'SELECT * FROM tb_report';
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error',
+                error: err,
+                url: req.url
+            });
+        }
+        res.status(200).json({
+            status: true,
+            message: 'Success get report',
+            data: results,
+            url: req.url
+        });
+    });
 };
 
-module.exports = { saveReport };
+exports.createReport = async (req, res) => {
+    const { nama, email, telepon, lokasi, operator, keterangan, latitude, longitude } = req.body;
+    
+    // Check if all required fields are present
+    if (!nama || !email || !telepon || !lokasi || !operator || !keterangan || !latitude || !longitude) {
+        return res.status(400).json({
+            msg: "Please fill all the fields"
+        });
+    }
+
+    try {
+        const query = "INSERT INTO tb_report (nama, email, telepon, lokasi, operator, keterangan, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        await db.promise().query(query, [nama, email, telepon, lokasi, operator, keterangan, latitude, longitude]);
+        return res.status(201).json({ msg: "Report created successfully" });
+    } catch (err) {
+        return res.status(500).json({ msg: "Server error", error: err.message });
+    }
+};
+
+
+

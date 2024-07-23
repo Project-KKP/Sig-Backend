@@ -3,7 +3,7 @@ const { createLocation } = require('../controllers/createController');
 const { deleteLocation } = require('../controllers/deleteController');
 const { updateLocation } = require('../controllers/updateController');
 const { getData } = require('../controllers/dataController');
-const { saveReport } = require('../controllers/reportController')
+const { getReport, createReport } = require('../controllers/reportController')
 const { loginUser, editUser } = require('../controllers/loginController');
 const { registerUser } = require('../controllers/registerController');
 const { verifyToken, isAdmin } = require('../middleware/auth');
@@ -11,24 +11,20 @@ const { createBlank } = require('../controllers/createblank');
 const { deleteBlank } = require('../controllers/deleteblank');
 const { updateBlank } = require('../controllers/updateblank');
 const { getBlank } = require('../controllers/getblank')
-const multer = require('multer');
-
-
-const upload = multer({ storage: multer.memoryStorage() });
 
 // Public routes
 router.get('/towers', getData);
 router.post('/login', loginUser);
 router.post('/register', registerUser);
 router.put('/edituser', verifyToken, editUser);
-router.post('/report', verifyToken, upload.single('image'), saveReport);
+router.post('/report', verifyToken, createReport);
 
 
 // Protected routes for admin
 router.post('/towers', [verifyToken, isAdmin], createLocation);
 router.put('/towers/:id', [verifyToken, isAdmin], updateLocation);
 router.delete('/towers/:id', [verifyToken, isAdmin], deleteLocation);
-//router.get('/report', [verifyToken, isAdmin], getReport)
+router.get('/report', [verifyToken, isAdmin], getReport)
 
 
 //create blank
