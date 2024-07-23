@@ -13,22 +13,22 @@ const { updateBlank } = require('../controllers/updateblank');
 const { getBlank } = require('../controllers/getblank')
 
 // Public routes
-router.get('/data', getData);
+router.get('/towers', getData);
 router.post('/login', loginUser);
 router.post('/register', registerUser);
 router.get('/report', [verifyToken, isAdmin], getReport)
 
 // Protected routes for admin
-router.post('/create', [verifyToken, isAdmin], createLocation);
-router.put('/update/:id', [verifyToken, isAdmin], updateLocation);
-router.delete('/delete/:id', [verifyToken, isAdmin], deleteLocation);
+router.post('/towers', [verifyToken, isAdmin], createLocation);
+router.put('/towers/:id', [verifyToken, isAdmin], updateLocation);
+router.delete('/towers/:id', [verifyToken, isAdmin], deleteLocation);
 router.put('/edituser', verifyToken, editUser);
 
 
 //create blank
-router.post('/createblankspot', [verifyToken, isAdmin], createBlank);
-router.delete('/deleteblankspot/:id', [verifyToken, isAdmin], deleteBlank);
-router.put('/updateblankspot/:id', [verifyToken, isAdmin], updateBlank);
-router.get('/getblank', getBlank);
+router.post('/blankspots', [verifyToken, isAdmin], createBlank);
+router.delete('/blankspots/:id', [verifyToken, isAdmin], deleteBlank);
+router.put('/blankspots/:id', [verifyToken, isAdmin], updateBlank);
+router.get('/blankspots', getBlank);
 
 module.exports = router;
