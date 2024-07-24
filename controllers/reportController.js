@@ -39,4 +39,23 @@ exports.createReport = async (req, res) => {
 };
 
 
+exports.getReportLength = (req, res) => {
+    db.execute('SELECT COUNT(*) as count FROM tb_report', (error, results, fields) => {
+        if (error) {
+            console.error('Error fetching report count:', error);
+            return res.status(500).json({ message: 'Error fetching report count' });
+        }
+
+        // Log the results to see the structure
+        console.log('Database query results:', results);
+
+        if (results && results.length > 0) {
+            const count = results[0].count;
+            console.log('Count:', count);
+            return res.status(200).json({ count });
+        } else {
+            return res.status(404).json({ message: 'No data found' });
+        }
+    });
+};
 

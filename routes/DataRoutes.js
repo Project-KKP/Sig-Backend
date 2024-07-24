@@ -3,7 +3,7 @@ const { createLocation } = require('../controllers/createController');
 const { deleteLocation } = require('../controllers/deleteController');
 const { updateLocation } = require('../controllers/updateController');
 const { getData } = require('../controllers/dataController');
-const { getReport, createReport } = require('../controllers/reportController')
+const { getReport, createReport, getReportLength } = require('../controllers/reportController')
 const { loginUser, editUser } = require('../controllers/loginController');
 const { registerUser } = require('../controllers/registerController');
 const { verifyToken, isAdmin } = require('../middleware/auth');
@@ -16,6 +16,7 @@ const { getBlank } = require('../controllers/getblank')
 router.get('/towers', getData);
 router.post('/login', loginUser);
 router.post('/register', registerUser);
+router.get('/reportlength', getReportLength)
 router.put('/edituser', verifyToken, editUser);
 router.post('/report', verifyToken, createReport);
 
