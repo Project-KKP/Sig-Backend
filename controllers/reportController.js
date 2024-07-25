@@ -59,3 +59,40 @@ exports.getReportLength = (req, res) => {
     });
 };
 
+exports.createKritik = async (req, res) => {
+    const { nama, email, telepon, pesan} = req.body;
+    
+    // Check if all required fields are present
+    if (!nama || !email || !telepon || !pesan ) {
+        return res.status(400).json({
+            msg: "Please fill all the fields"
+        });
+    }
+
+    try {
+        const query = "INSERT INTO tb_kritik (nama, email, telepon, pesan) VALUES (?, ?, ?, ?)";
+        await db.promise().query(query, [nama, email, telepon, pesan]);
+        return res.status(201).json({ msg: "Kritik dan Saran berhasil dibuat" });
+    } catch (err) {
+        return res.status(500).json({ msg: "Server error", error: err.message });
+    }
+};
+
+exports.getKritik = (req, res) => {
+    const sql = 'SELECT * FROM tb_kritik';
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error',
+                error: err,
+                url: req.url
+            });
+        }
+        res.status(200).json({
+            status: true,
+            message: 'Success get kritik',
+            data: results,
+            url: req.url
+        });
+    });
+};
