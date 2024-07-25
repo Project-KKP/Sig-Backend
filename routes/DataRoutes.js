@@ -17,7 +17,7 @@ router.get('/towers', getData);
 router.post('/login', loginUser);
 router.post('/register', registerUser);
 router.get('/reportlength', getReportLength);
-router.post('/kritik', verifyToken, createKritik);
+router.post('/kritik', createKritik);
 router.get('/kritik',verifyToken, isAdmin, getKritik);
 router.put('/edituser', verifyToken, editUser);
 router.post('/report', createReport);
