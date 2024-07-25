@@ -20,18 +20,18 @@ exports.getReport = (req, res) => {
 };
 
 exports.createReport = async (req, res) => {
-    const { nama, email, telepon, lokasi, operator, keterangan, latitude, longitude } = req.body;
+    const { nama, email, telepon, lokasi, latitude, longitude, operator, keterangan, imgurl } = req.body;
     
     // Check if all required fields are present
-    if (!nama || !email || !telepon || !lokasi || !operator || !keterangan || !latitude || !longitude) {
+    if (!nama || !email || !telepon || !lokasi || !latitude || !longitude || !operator || !keterangan || !imgurl) {
         return res.status(400).json({
             msg: "Please fill all the fields"
         });
     }
 
     try {
-        const query = "INSERT INTO tb_report (nama, email, telepon, lokasi, operator, keterangan, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        await db.promise().query(query, [nama, email, telepon, lokasi, operator, keterangan, latitude, longitude]);
+        const query = "INSERT INTO tb_report (nama, email, telepon, lokasi, latitude, longitude, operator, keterangan, imgurl) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        await db.promise().query(query, [nama, email, telepon, lokasi, latitude, longitude, operator, keterangan, imgurl]);
         return res.status(201).json({ msg: "Report created successfully" });
     } catch (err) {
         return res.status(500).json({ msg: "Server error", error: err.message });
