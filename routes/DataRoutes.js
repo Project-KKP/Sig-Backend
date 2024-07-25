@@ -20,7 +20,7 @@ router.get('/reportlength', getReportLength);
 router.post('/kritik', verifyToken, createKritik);
 router.get('/kritik',verifyToken, isAdmin, getKritik);
 router.put('/edituser', verifyToken, editUser);
-router.post('/report', verifyToken, createReport);
+router.post('/report', createReport);
 
 
 // Protected routes for admin
