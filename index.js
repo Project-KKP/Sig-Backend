@@ -3,9 +3,10 @@ const DataRoutes = require('./routes/DataRoutes');
 const errorHandler = require('./middleware/errorhandler');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // Importing cors
+const dotenv = require('dotenv');
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // CORS options
 const corsOptions = {
