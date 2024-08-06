@@ -1,0 +1,515 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API SIG Menara Telekomunikasi dan Blankspot",
+    "version": "1.0.0",
+    "description": "API for managing towers, blankspots, reports, and user authentication"
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "User login",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "summary": "User registration",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully"
+          }
+        }
+      }
+    },
+    "/towers": {
+      "get": {
+        "summary": "Get all towers",
+        "tags": ["Towers"],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tower"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new tower",
+        "tags": ["Towers"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tower"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tower created successfully"
+          }
+        }
+      }
+    },
+    "/towers/{id}": {
+      "put": {
+        "summary": "Update a tower",
+        "tags": ["Towers"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tower"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tower updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a tower",
+        "tags": ["Towers"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tower deleted successfully"
+          }
+        }
+      }
+    },
+    "/blankspots": {
+      "post": {
+        "summary": "Create a new blankspot",
+        "tags": ["Blankspots"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blankspot"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Blankspot created successfully"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all blankspots",
+        "tags": ["Blankspots"],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Blankspot"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/blankspots/{id}": {
+      "delete": {
+        "summary": "Delete a blankspot",
+        "tags": ["Blankspots"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Blankspot deleted successfully"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a blankspot",
+        "tags": ["Blankspots"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blankspot"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Blankspot updated successfully"
+          }
+        }
+      }
+    },
+    "/reportlength": {
+      "get": {
+        "summary": "Get report length",
+        "tags": ["Reports"],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "length": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/report": {
+      "post": {
+        "summary": "Create a new report",
+        "tags": ["Reports"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Report"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Report created successfully"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all reports",
+        "tags": ["Reports"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Report"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/kritik": {
+      "post": {
+        "summary": "Create a new kritik",
+        "tags": ["Kritik"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kritik"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Kritik created successfully"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all kritik",
+        "tags": ["Kritik"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Kritik"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "RegisterRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Tower": {
+        "type": "object",
+        "properties": {
+          "lokasi": {
+            "type": "string"
+          },
+          "ketinggian": {
+            "type": "number"
+          },
+          "operator": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tipe": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number"
+          },
+          "longitude": {
+            "type": "number"
+          }
+        }
+      },
+      "Blankspot": {
+        "type": "object",
+        "properties": {
+          "lokasi": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number"
+          },
+          "longitude": {
+            "type": "number"
+          }
+        }
+      },
+      "Report": {
+        "type": "object",
+        "properties": {
+          "nama": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "telepon": {
+            "type": "string"
+          },
+          "lokasi": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number"
+          },
+          "longitude": {
+            "type": "number"
+          },
+          "operator": {
+            "type": "string"
+          },
+          "imgurl": {
+            "type": "string"
+          },
+          "keterangan": {
+            "type": "string"
+          }
+        }
+      },
+      "Kritik": {
+        "type": "object",
+        "properties": {
+          "nama": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "telepon": {
+            "type": "string"
+          },
+          "pesan": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
